@@ -84,10 +84,10 @@ docs/               문서와 실험 기록
 
 ```bash
 # Windows (관리자 PowerShell)
-New-Item -ItemType SymbolicLink -Path data\raw -Target D:\drone_hackatone\ws\data\raw
+New-Item -ItemType SymbolicLink -Path data\raw -Target <원본이 있는 경로>
 
 # Linux, macOS
-ln -s /path/to/raw data/raw
+ln -s <원본이 있는 경로> data/raw
 ```
 
 ## 재현 절차
