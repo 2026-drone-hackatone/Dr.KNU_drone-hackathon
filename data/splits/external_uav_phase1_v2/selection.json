@@ -1,0 +1,2421 @@
+{
+  "name": "external_uav_phase1_v2",
+  "seed": 42,
+  "fixed_test": true,
+  "requested_source_ratios": {
+    "drone_detection": 0.15,
+    "drone_bird": 0.425,
+    "purdue_uav": 0.425
+  },
+  "company_proxy": {
+    "width": 1280,
+    "height": 720,
+    "median_bbox_width": 9,
+    "median_bbox_height": 4
+  },
+  "training_canvas": {
+    "width": 832,
+    "height": 480
+  },
+  "quality_rules": {
+    "exclude_clipped_annotation_frames": true,
+    "exclude_all_interpolated_tiny_purdue": true,
+    "interpolated_tiny_max_side": 8.0,
+    "min_effective_box_side": 1.5,
+    "suspicious_jpeg_bytes": 40000,
+    "uniform_gray_std": 1.0
+  },
+  "sequence_assignments": {
+    "drone_detection": {
+      "train": [
+        "official_train"
+      ],
+      "val": [
+        "official_val"
+      ]
+    },
+    "drone_bird": {
+      "train": [
+        "2019_08_19_C0001_5319_phantom",
+        "2019_08_19_GP015869_1520_inspire",
+        "2019_10_16_C0003_1700_matrice",
+        "2019_10_16_C0003_3633_inspire",
+        "2019_10_16_C0003_4613_mavic",
+        "2019_10_16_C0003_5043_mavic",
+        "2019_11_14_C0001_3922_matrice",
+        "GOPR5842_002",
+        "GOPR5842_005",
+        "GOPR5842_007",
+        "GOPR5843_002",
+        "GOPR5843_005",
+        "GOPR5844_002",
+        "GOPR5844_004",
+        "GOPR5846_002",
+        "GOPR5846_005",
+        "GOPR5847_003",
+        "GOPR5847_004",
+        "GOPR5848_002",
+        "GOPR5848_004",
+        "custom_fixed_wing_1",
+        "custom_fixed_wing_2",
+        "distant_parrot_2",
+        "distant_parrot_with_birds",
+        "dji_matrice_210_hillside",
+        "dji_matrice_210_mountain",
+        "dji_matrice_210_off_focus",
+        "dji_matrice_210_sky",
+        "dji_mavick_close_buildings",
+        "dji_mavick_hillside_off_focus",
+        "dji_mavick_mountain_cruise",
+        "dji_phantom_4_hillside_cross",
+        "dji_phantom_4_long_takeoff",
+        "dji_phantom_mountain_cross",
+        "fixed_wing_over_hill_1",
+        "gopro_000",
+        "gopro_001",
+        "gopro_002",
+        "gopro_003",
+        "gopro_004",
+        "gopro_005",
+        "gopro_006",
+        "gopro_007",
+        "gopro_008",
+        "matrice_600_2",
+        "matrice_600_3",
+        "parot_disco_takeoff",
+        "parrot_clear_birds",
+        "parrot_disco_distant_cross_3",
+        "parrot_disco_long_session",
+        "parrot_disco_midrange_cross",
+        "parrot_disco_zoomin_zoomout",
+        "swarm_dji_phantom4_2",
+        "two_parrot_disco_1",
+        "two_uavs_plus_airplane"
+      ],
+      "val": [
+        "2019_08_19_GOPR5869_1530_phantom",
+        "GOPR5845_001",
+        "GOPR5845_004",
+        "dji_mavick_mountain",
+        "dji_pantom_landing_custom_fixed_takeoff",
+        "dji_phantom_4_mountain_hover",
+        "dji_phantom_4_swarm_noon",
+        "fixed_wing_over_hill_2"
+      ]
+    },
+    "purdue_uav": {
+      "train": [
+        "Clip_1",
+        "Clip_10",
+        "Clip_11",
+        "Clip_12",
+        "Clip_13",
+        "Clip_14",
+        "Clip_15",
+        "Clip_17",
+        "Clip_18",
+        "Clip_19",
+        "Clip_2",
+        "Clip_21",
+        "Clip_22",
+        "Clip_24",
+        "Clip_25",
+        "Clip_27",
+        "Clip_28",
+        "Clip_29",
+        "Clip_3",
+        "Clip_30",
+        "Clip_31",
+        "Clip_32",
+        "Clip_33",
+        "Clip_35",
+        "Clip_36",
+        "Clip_4",
+        "Clip_41",
+        "Clip_46",
+        "Clip_47",
+        "Clip_48",
+        "Clip_49",
+        "Clip_50",
+        "Clip_6",
+        "Clip_8",
+        "Clip_9"
+      ],
+      "val": [
+        "Clip_20",
+        "Clip_23",
+        "Clip_34",
+        "Clip_40",
+        "Clip_42",
+        "Clip_43",
+        "Clip_45",
+        "Clip_5"
+      ]
+    }
+  },
+  "excluded_count": 438,
+  "excluded_by_reason": {
+    "uniform_or_undecodable_image": 16,
+    "sequence_overlaps_fixed_test": 167,
+    "clipped_annotation": 239,
+    "all_boxes_below_effective_pixel_limit": 8,
+    "all_interpolated_and_tiny": 8
+  },
+  "excluded_samples": [
+    {
+      "sample_id": "drone_detection__train__train_0002042",
+      "dataset": "drone_detection",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000000",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000005",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000010",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000015",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000020",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000025",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000030",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000035",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000040",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000045",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000050",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000055",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000060",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000065",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000070",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000075",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000080",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000085",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000090",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000095",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000100",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000105",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000110",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000115",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000120",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000125",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000130",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000135",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000140",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000145",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000150",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000155",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000160",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000165",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000170",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000175",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000180",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000185",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000190",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000195",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000200",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000205",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000210",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000215",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000220",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000225",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000230",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000235",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000240",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000245",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000250",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000255",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000260",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000265",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000270",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000275",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000280",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000285",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000290",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000295",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000300",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000305",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000310",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000315",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000320",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000325",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000330",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000335",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000340",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000345",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000350",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000355",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000360",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000365",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000370",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000375",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000380",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000385",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000390",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000395",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000400",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000405",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000410",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000415",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000420",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000425",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000430",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000435",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000440",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000445",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000450",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000455",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000460",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000465",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000470",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000475",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000480",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000485",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000490",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000495",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000500",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000505",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000510",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000515",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000520",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000525",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000530",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000535",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000540",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000545",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000550",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000555",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000560",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000565",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000570",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000575",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000580",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000585",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000590",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000595",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000600",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000605",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000610",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000615",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000620",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000625",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000630",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000635",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000640",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000645",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000650",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000655",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000660",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000665",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000670",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000675",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000680",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000685",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000690",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000695",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000700",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000705",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000710",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000715",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000720",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000725",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000730",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000735",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000740",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000745",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000750",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000755",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000760",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000765",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000770",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000775",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000780",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000785",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000790",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000795",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000800",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000805",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000810",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000825",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000830",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000835",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds_med_range__000840",
+      "dataset": "drone_bird",
+      "reason": "sequence_overlaps_fixed_test"
+    },
+    {
+      "sample_id": "drone_bird__2019_08_19_C0001_5319_phantom__000735",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_1700_matrice__000900",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_1700_matrice__001360",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_1700_matrice__001365",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000240",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000245",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000250",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000290",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000300",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_10_16_C0003_3633_inspire__000305",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_11_14_C0001_3922_matrice__001315",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__2019_11_14_C0001_3922_matrice__001395",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__GOPR5842_002__000595",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__GOPR5842_007__000430",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_1__001420",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_2__000350",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_2__000500",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_2__000505",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_2__001130",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__custom_fixed_wing_2__001415",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__distant_parrot_2__000755",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__distant_parrot_2__000840",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__distant_parrot_with_birds__000840",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_mavick_hillside_off_focus__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_mavick_mountain__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_hillside_cross__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_hillside_cross__002095",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_hillside_cross__002350",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_hillside_cross__002360",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_long_takeoff__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_mountain_hover__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_swarm_noon__000822",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_swarm_noon__000824",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_swarm_noon__000890",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_swarm_noon__002372",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_4_swarm_noon__002374",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__dji_phantom_mountain_cross__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__fixed_wing_over_hill_1__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__fixed_wing_over_hill_2__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__fixed_wing_over_hill_2__000330",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__gopro_005__000806",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_005__000808",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_007__000924",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_007__000926",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_007__000928",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_007__000930",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__gopro_007__000932",
+      "dataset": "drone_bird",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "drone_bird__matrice_600_3__002590",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__matrice_600_3__002595",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__matrice_600_3__002600",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__parot_disco_takeoff__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__parot_disco_takeoff__000085",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds__000365",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__parrot_clear_birds__000840",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__parrot_disco_midrange_cross__000775",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__parrot_disco_midrange_cross__002485",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__parrot_disco_zoomin_zoomout__000840",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "drone_bird__swarm_dji_phantom4_2__001945",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__swarm_dji_phantom4_2__001946",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__swarm_dji_phantom4_2__002085",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__swarm_dji_phantom4_2__002090",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_parrot_disco_1__000840",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_parrot_disco_1__001515",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_parrot_disco_1__001860",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_parrot_disco_1__002380",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_parrot_disco_1__002480",
+      "dataset": "drone_bird",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "drone_bird__two_uavs_plus_airplane__000000",
+      "dataset": "drone_bird",
+      "reason": "uniform_or_undecodable_image"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_1__000298",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_10__000585",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_10__000590",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_13__001335",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_13__001340",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_13__001355",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_14__000218",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_14__000220",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__000018",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__000576",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__000588",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__000656",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001366",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001368",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001374",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001666",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001668",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001670",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001672",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001674",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001676",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_15__001702",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000110",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000135",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000170",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000375",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000384",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_18__000386",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_19__000462",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_19__001418",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_19__001452",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__000096",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__000190",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__000192",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__000526",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__000528",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__001664",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_20__001796",
+      "dataset": "purdue_uav",
+      "reason": "all_boxes_below_effective_pixel_limit"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_21__000675",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_22__000125",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_22__000490",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_22__000650",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_24__000175",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_25__001445",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_25__001450",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000026",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000432",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000564",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000566",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000658",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__000660",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__001220",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_28__001608",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_29__000790",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_29__000845",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_29__001410",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_3__000360",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_30__000220",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_30__000260",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_30__000516",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_30__001132",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_30__001230",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000190",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000195",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000305",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000310",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000315",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000440",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__000770",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__001355",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__001745",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__001750",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__001755",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_31__001795",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_32__000402",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_32__000662",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_32__000976",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_33__001002",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_33__001004",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_33__001034",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000120",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000140",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000145",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000150",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000160",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000200",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000240",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000595",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000630",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000635",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000735",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000840",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000845",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_34__000850",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_35__000030",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_35__000040",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_36__000188",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_36__000670",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000005",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000095",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000100",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000150",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000160",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000165",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000170",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000470",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000475",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000480",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000720",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000725",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__000765",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001200",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001205",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001210",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001215",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001220",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001295",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001300",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001305",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001310",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001390",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_4__001395",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_40__000945",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_40__000950",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_40__000955",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_40__001500",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_40__001505",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_41__001198",
+      "dataset": "purdue_uav",
+      "reason": "all_interpolated_and_tiny"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000485",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000595",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000600",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000605",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000610",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000670",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__000710",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__001035",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__001200",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__001410",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_42__001415",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_43__000465",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000070",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000075",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000100",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000235",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000465",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000625",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000705",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000820",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000825",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000830",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_45__000850",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000065",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000070",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000090",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000095",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000265",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000285",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000360",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000395",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000650",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_46__000720",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_47__000520",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_47__000915",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_48__000255",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_48__000735",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000000",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000015",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000040",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000270",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000280",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000285",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000290",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000295",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000300",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000390",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__000830",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__001190",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__001580",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__001585",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_49__001590",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_5__000235",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_5__000245",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_5__000935",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000180",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000185",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000380",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000445",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000450",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000475",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000505",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000645",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000650",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000825",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__000830",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__001240",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__001245",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_50__001250",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__000560",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__000562",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__000564",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__000566",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__001330",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    },
+    {
+      "sample_id": "purdue_uav__Clip_8__001332",
+      "dataset": "purdue_uav",
+      "reason": "clipped_annotation"
+    }
+  ],
+  "duplicate_count": 0,
+  "duplicates": [],
+  "additional_negatives": {
+    "requested_train": 1413,
+    "requested_val": 340,
+    "written_train": 1413,
+    "written_val": 293,
+    "uniform_removed": 0
+  },
+  "dataset": {
+    "train": {
+      "images": 26177,
+      "boxes": 28149,
+      "negative_frames": 2618,
+      "negative_ratio": 0.10001146044237308,
+      "sources": {
+        "drone_bird": 11232,
+        "drone_detection": 3714,
+        "purdue_uav": 11231
+      },
+      "proxy_bins_1280x720": {
+        "large": 6658,
+        "small": 7916,
+        "company_like": 8985,
+        "negative": 2618
+      },
+      "sequences": 90
+    },
+    "val": {
+      "images": 5020,
+      "boxes": 6201,
+      "negative_frames": 460,
+      "negative_ratio": 0.09163346613545817,
+      "sources": {
+        "drone_bird": 2082,
+        "drone_detection": 709,
+        "purdue_uav": 2229
+      },
+      "proxy_bins_1280x720": {
+        "negative": 460,
+        "company_like": 1368,
+        "small": 2163,
+        "large": 1029
+      },
+      "sequences": 16
+    },
+    "test": {
+      "images": 5557,
+      "boxes": 9153,
+      "negative_frames": 181,
+      "negative_ratio": 0.032571531401835524,
+      "sources": {
+        "drone_bird": 2223,
+        "drone_detection": 1111,
+        "purdue_uav": 2223
+      },
+      "proxy_bins_1280x720": {
+        "negative": 181,
+        "large": 1426,
+        "small": 2609,
+        "company_like": 1341
+      },
+      "sequences": 20
+    }
+  }
+}
