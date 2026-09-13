@@ -1,0 +1,17 @@
+{
+  "dataset_root": "data/processed/external_uav_phase1_v2_960x544",
+  "totals": {
+    "train_images": 26177,
+    "train_boxes": 28149,
+    "train_negative_frames": 2618,
+    "val_images": 5020,
+    "val_boxes": 6201,
+    "val_negative_frames": 460,
+    "test_images": 5557,
+    "test_boxes": 9153,
+    "test_negative_frames": 181
+  },
+  "hash_leakage_checked": true,
+  "issue_count": 0,
+  "issues": []
+}
