@@ -1,0 +1,16 @@
+name: drone_bird
+kind: counted_video
+video_root: data/drone_bird/videos
+annotation_root: data/drone_bird/annotations
+output_root: data/processed/drone_bird
+split_file: data/splits/drone_bird/splits.json
+frame_index_base: 0
+seed: 42
+split_ratio: [0.70, 0.15, 0.15]
+sampling:
+  positive_stride: 5
+  tiny_stride: 2
+  tiny_max_side: 16
+  negative_stride: 15
+jpeg_quality: 95
+

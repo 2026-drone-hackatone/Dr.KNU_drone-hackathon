@@ -1,0 +1,57 @@
+name: external_uav_phase1_v2
+output_root: data/processed/external_uav_phase1_v2
+split_file: data/splits/external_uav_phase1_v2/selection.json
+quality_report: data/reports/external_uav_phase1_v2_preprocessing.json
+seed: 42
+
+# The old test set is immutable. Only the former train/val development pool is
+# repartitioned and sampled.
+fixed_test_metadata: data/processed/external_uav_combined/metadata.jsonl
+sources:
+  drone_detection:
+    metadata: data/processed/drone_detection/metadata.jsonl
+    ratio: 0.15
+    preserve_official_train_val: true
+  drone_bird:
+    metadata: data/processed/drone_bird/metadata.jsonl
+    raw_config: configs/data/drone_bird.yaml
+    ratio: 0.425
+  purdue_uav:
+    metadata: data/processed/purdue_uav/metadata.jsonl
+    raw_config: configs/data/purdue_uav.yaml
+    ratio: 0.425
+
+val_fraction_of_development: 0.15
+max_train_frames_per_sequence: 500
+max_val_frames_per_sequence: 500
+link_mode: symlink
+deduplicate_images: true
+negative_target_ratio: 0.10
+additional_negative_stride: 5
+additional_negative_offset: 5
+max_additional_negatives_per_sequence: 80
+negative_cache_root: data/processed/external_uav_phase1_v2_negative_pool
+exclude_sequences:
+  drone_bird:
+    # 69 exact non-black frames overlap the fixed-test off_focus_parrot_birds sequence.
+    - parrot_clear_birds_med_range
+
+# Company-data proxy used only for statistics and sample stratification. The
+# unavailable company images and 3-class labels are never synthesized.
+company_proxy:
+  width: 1280
+  height: 720
+  median_bbox_width: 9
+  median_bbox_height: 4
+
+training_canvas:
+  width: 832
+  height: 480
+
+quality:
+  exclude_clipped_annotation_frames: true
+  exclude_all_interpolated_tiny_purdue: true
+  interpolated_tiny_max_side: 8.0
+  min_effective_box_side: 1.5
+  suspicious_jpeg_bytes: 40000
+  uniform_gray_std: 1.0

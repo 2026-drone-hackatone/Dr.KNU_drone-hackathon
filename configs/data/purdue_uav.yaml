@@ -1,0 +1,18 @@
+name: purdue_uav
+kind: mot_video
+video_root: data/purdue_uav/videos
+annotation_root: data/purdue_uav/annotations
+annotation_suffix: _refined
+output_root: data/processed/purdue_uav
+split_file: data/splits/purdue_uav/splits.json
+frame_index_base: 1
+min_annotation_confidence: 0.5
+seed: 42
+split_ratio: [0.70, 0.15, 0.15]
+sampling:
+  positive_stride: 5
+  tiny_stride: 2
+  tiny_max_side: 16
+  negative_stride: 15
+jpeg_quality: 95
+
