@@ -1,0 +1,23 @@
+# 기본: 텍스트 자동 판별, 저장소에는 LF로 정규화
+* text=auto
+
+# 셸 스크립트는 반드시 LF (CRLF면 Linux/Jetson/Colab에서 실행 불가)
+*.sh        text eol=lf
+*.py        text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+
+# Windows 전용
+*.ps1       text eol=crlf
+*.bat       text eol=crlf
+
+# 바이너리 (diff 시도 금지)
+*.pt        binary
+*.onnx      binary
+*.engine    binary
+*.png       binary
+*.jpg       binary
+*.mp4       binary
+
+# 노트북은 diff가 지저분하므로 충돌 시 수동 확인
+*.ipynb     -diff

@@ -1,0 +1,30 @@
+# =====================================================================
+#  ⚠️ 버전을 반드시 고정합니다.
+#     Ultralytics는 마이너 버전에서도 loss/assigner/기본 하이퍼파라미터가
+#     바뀌는 경우가 있어, 버전이 다르면 R1~R8과 비교가 성립하지 않습니다.
+#     아래 x는 팀원이 R1~R8에 실제로 사용한 버전으로 교체하십시오.
+#     확인: python -c "import ultralytics; print(ultralytics.__version__)"
+# =====================================================================
+ultralytics==8.3.x          # TODO: 실제 버전으로 교체
+
+# PyTorch는 CUDA 버전에 따라 달라지므로 여기서 핀하지 않습니다.
+# 각 환경에 맞게 설치하십시오. https://pytorch.org/get-started/locally/
+#   로컬 (CUDA 12.x) : pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   Colab            : 사전 설치됨
+#   Jetson (aarch64) : https://pypi.jetson-ai-lab.dev/jp6/cu126
+
+# ---- 데이터 처리 ----
+numpy
+opencv-python
+pillow
+pyyaml
+pandas
+pyarrow                     # drone_detection parquet 읽기
+
+# ---- 평가 / 시각화 ----
+matplotlib
+seaborn
+tqdm
+
+# ---- 추적 (Phase-2) ----
+# boxmot                    # ByteTrack / BoT-SORT / OC-SORT 등
