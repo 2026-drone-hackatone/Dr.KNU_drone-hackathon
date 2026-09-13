@@ -96,13 +96,19 @@ ln -s <원본이 있는 경로> data/raw
 # 환경
 pip install -r requirements.txt
 
-# 원본을 YOLO 포맷으로 변환하고 시퀀스 단위로 split
-bash scripts/01_convert_all_datasets.sh
-bash scripts/02_build_splits.sh
-bash scripts/03_build_combined_dataset.sh
+# 데이터셋 전처리
+python -m src.data.inspect_datasets
+python -m src.data.prepare_datasets --force
+python -m src.data.build_combined_dataset --force
+bash scripts/07_rebuild_phase1_v2.sh --force
+bash scripts/08_materialize_phase1_v2_1280x720.sh --force
 
 # 검증
 bash scripts/04_validate_dataset.sh
+
+# 모델 학습
+python -m src.train.train_detector \
+    --config configs/train/R9_yolo11n_1280x720_v2.yaml
 ```
 
 검증 결과가 아래와 다르면 split이 틀어진 것이므로 학습을 시작하면 안 됩니다.
