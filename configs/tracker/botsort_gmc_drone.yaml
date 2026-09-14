@@ -1,0 +1,24 @@
+# BoT-SORT + Global Motion Compensation for tiny drones and moving cameras.
+# Recommended detector-side setting: conf=0.01 (must be <= track_low_thresh).
+tracker_type: botsort
+
+# Keep weak tiny-drone detections available for association, while requiring a
+# stronger detection before a new ID is created.
+track_high_thresh: 0.20
+track_low_thresh: 0.03
+new_track_thresh: 0.30
+
+# Preserve briefly lost tracks and allow more tolerant motion/IoU matching.
+track_buffer: 60
+match_thresh: 0.85
+fuse_score: true
+
+# Estimate the camera's frame-to-frame affine motion before track association.
+gmc_method: sparseOptFlow
+
+# ReID is intentionally disabled: 9x4-pixel-class targets contain little
+# reliable appearance information, and ReID would add deployment overhead.
+proximity_thresh: 0.50
+appearance_thresh: 0.80
+with_reid: false
+model: auto

@@ -1,0 +1,19 @@
+# ByteTrack C: aggressive early-acquisition candidate.
+# Use detector conf=0.01; expect more false tracks and verify them on validation videos.
+tracker_type: bytetrack
+track_high_thresh: 0.20
+track_low_thresh: 0.03
+new_track_thresh: 0.30
+track_buffer: 60
+match_thresh: 0.85
+fuse_score: true
+
+
+# init
+# tracker_type: bytetrack
+# track_high_thresh: 0.15
+# track_low_thresh: 0.03
+# new_track_thresh: 0.15
+# track_buffer: 60
+# match_thresh: 0.85
+# fuse_score: true

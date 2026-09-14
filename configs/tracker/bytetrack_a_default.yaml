@@ -1,0 +1,9 @@
+# ByteTrack A: Ultralytics baseline.
+# Use detector conf=0.05 so detections down to track_low_thresh reach the tracker.
+tracker_type: bytetrack
+track_high_thresh: 0.25
+track_low_thresh: 0.10
+new_track_thresh: 0.25
+track_buffer: 30
+match_thresh: 0.80
+fuse_score: true
