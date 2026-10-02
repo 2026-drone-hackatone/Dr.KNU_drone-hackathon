@@ -1,30 +1,21 @@
 # Dr.KNU Drone Hackathon — UAV Detection (A0 / N1 / P1 / T0 / U1Z)
 
 기업 제공 UAV 데이터셋(3클래스: `quad_civil`, `fixed_wing`, `target_uav`, 1280x720)에 대한 YOLO11 계열 탐지 모델 다섯 개의
-학습 설정, 학습 코드, 결과 기록을 정리한 저장소다. 가중치(`*.pt`)와 데이터는 커밋하지 않는다.
+학습 설정, 학습 코드, 결과 기록을 정리한 저장소다. 
 
 ## 1. 모델 요약
 
-| ID | 설정 파일 | 구조 | 초기값 | 학습 데이터 | Detect stride | Params | FLOPs(B) @736x1280 | 학습 로그 mAP50 (epoch) | 독립 평가 mAP50 |
-|---|---|---|---|---|---|---:|---:|---:|---:|
-| A0 | `A0_baseline` | YOLO11n stock | COCO `yolo11n.pt` | company train | 8/16/32 | 2,590,425 | 15.14 | 0.6180 (11) | 0.6190 |
-| N1 | `N1_model1` | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO `yolo11n.pt` | company train | 4/8/16/32 | 2,667,084 | 24.23 | 0.6241 (31) | – |
-| P1 | `P1_model2` | YOLO11n P2–P4 (P5 head 제거) | COCO `yolo11n.pt` | company train | 4/8/16 | 1,939,145 | 22.89 | 0.6477 (9) | 0.6491 |
-| T0 | `T0_model3` | YOLO11s stock | COCO `yolo11s.pt` | company train | 8/16/32 | 9,428,953 | 50.21 | 0.6637 (19) | 0.6629* |
-| U1Z | `U1Z_ours` | YOLO11n + 내부 x2 bilinear upsample | A0 best.pt (layer offset 1) | company train | 4/8/16 | 2,590,425 | 64.70 | 0.6973 (19) | **0.6957** |
+| ID  | 설정 파일       | 구조                                                           | 초기값                      | 학습 데이터   | Detect stride |    Params | FLOPs(B) @736x1280 | 학습 로그 mAP50 (epoch) |  독립 평가 mAP50 |
+| --- | --------------- | -------------------------------------------------------------- | --------------------------- | ------------- | ------------- | --------: | -----------------: | ----------------------: | ---------------: |
+| A0  | `A0_baseline` | YOLO11n stock                                                  | COCO`yolo11n.pt`          | company train | 8/16/32       | 2,590,425 |              15.14 |            0.6167 (11) |           0.6190 |
+| N1  | `N1_model1`   | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO`yolo11n.pt`          | company train | 4/8/16/32     | 2,667,084 |              24.23 |            0.6179 (31) |               – |
+| P1  | `P1_model2`   | YOLO11n P2–P4 (P5 head 제거)                                  | COCO`yolo11n.pt`          | company train | 4/8/16        | 1,939,145 |              22.89 |             0.6411 (9) |           0.6491 |
+| T0  | `T0_model3`   | YOLO11s stock                                                  | COCO`yolo11s.pt`          | company train | 8/16/32       | 9,428,953 |              50.21 |            0.6602 (19) |          0.6629* |
+| U1Z | `U1Z_ours`    | YOLO11n + 내부 x2 bilinear upsample                            | A0 best.pt (layer offset 1) | company train | 4/8/16        | 2,590,425 |              64.70 |            0.7122 (13) | **0.6957** |
 
 - 다섯 모델 모두 같은 provider split(기업 train 55 시퀀스 학습, 기업 val 14 시퀀스로 선택·평가)을 사용하므로 직접 비교할 수 있다.
 - Params / FLOPs는 `best.pt`를 Ultralytics `get_flops`(thop)로 직접 측정한 값이다. 736x1280은 `imgsz=1280, rect=True`에서 1280x720 입력이 stride 32 배수로 패딩된 실제 추론 크기다. 640 기준 A0는 6.50 GFLOPs로 Ultralytics 공식 YOLO11n 표와 일치한다.
 - 학습 로그 mAP50은 각 run의 `best_map50.json`(EMA, 학습 중 val). 독립 평가는 `src/evaluation/evaluate_company.py`(imgsz 1280, rect, conf 0.001, iou 0.7, max_det 300, TTA off)로 `best.pt`를 다시 평가한 값이다. T0의 *0.6629는 다른 머신에서 기록된 값이다.
-- U1Z의 epoch 18–22 평균 체크포인트는 독립 평가 0.6903으로 `best.pt`(0.6957)보다 낮았다.
-
-클래스별 독립 평가 AP50:
-
-| ID | quad_civil | fixed_wing | target_uav | precision | recall |
-|---|---:|---:|---:|---:|---:|
-| A0 | 0.4253 | 0.9312 | 0.5006 | 0.8228 | 0.6028 |
-| P1 | 0.4670 | 0.9377 | 0.5424 | 0.8161 | 0.6177 |
-| U1Z | 0.5410 | 0.9565 | 0.5895 | 0.8479 | 0.6605 |
 
 ## 2. 저장소 구성
 
@@ -66,7 +57,7 @@ pip install -r requirements.txt
 
 ```bash
 # provider split 보존 (다섯 실험 공통: train = 기업 train, val = 기업 val)
-bash scripts/09_prepare_airbility_dataset.sh
+bash scripts/01_prepare_airbility_dataset.sh
 #   -> data/processed/airbility_uav_detection_yolo/data.yaml + data/reports/*.json
 ```
 
@@ -92,7 +83,7 @@ python -m src.train.average_checkpoints \
 
 `train_detector.py`는 validation mAP50 최고 checkpoint를 `weights/best_map50.pt`에 저장하고 `best.pt`로 복사한다. 각 run에는 `experiment_config.yaml`, `environment.json`, `command.txt`가 함께 기록된다.
 
-## 6. 독립 평가
+### 6. 평가
 
 ```bash
 python -m src.evaluation.evaluate_company \
@@ -102,11 +93,3 @@ python -m src.evaluation.evaluate_company \
   --conf 0.001 --iou 0.7 --max-det 300 --plots --save-json \
   --output runs/evaluation/<ID>_company_val_1280/metrics.json
 ```
-
-## 7. 가중치
-
-`best.pt`는 저장소에 포함하지 않는다. 공유 위치(Google Drive 등)의 링크를 아래에 기록한다.
-
-| ID | checkpoint | SHA256 | 링크 |
-|---|---|---|---|
-| U1Z | `runs/detection/U1Z_ours/weights/best.pt` (epoch 19) | `7458d9b1603e8b05eb8215cbcf3d419106b629faa7c4c6111fb734eb251a43ea` | (추가 예정) |
