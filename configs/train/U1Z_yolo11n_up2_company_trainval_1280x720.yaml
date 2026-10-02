@@ -1,0 +1,56 @@
+# U1Z = FINAL submission retrain of U1 (YOLO11n + internal x2 upsample, ~63 GFLOPs,
+# the deployment candidate) on provider train + provider val (69 sequences).
+# Recipe is identical to U1_yolo11n_up2_company_1280x720.yaml; only data,
+# patience and the stop horizon differ:
+#   - data: airbility_uav_detection_trainval_yolo (val folder = provider val,
+#     which is now ALSO in train -> the per-epoch mAP is in-sample and best.pt /
+#     best_map50.json must NOT be used for model selection).
+#   - patience 0: early stopping disabled (in-sample fitness never plateaus cleanly).
+#   - stop_after_epoch 32: U1 was early-stopped after epoch 32 on the provider
+#     split; the 40-epoch cosine schedule is kept so per-epoch LR matches U1.
+# Checkpoint policy (fixed from U1 on the provider split, peak ep19):
+#   U1Z = weights_avg/avg_ep18-22.pt  (src/train/average_checkpoints.py --epochs 18-22)
+# Init: A0 best.pt (trained on provider train only) - unchanged.
+# Memory: batch 4 first; on OOM use batch 2 AND freeze_bn: true.
+id: U1Z_yolo11n_up2_company_trainval_1280x720
+family: detection
+architecture: yolo11n_up2
+model: configs/model/yolo11n_up2.yaml
+weights: runs/detection/A0_yolo11n_coco_airbility_provider_split_1280x720/weights/best.pt
+weights_layer_offset: 1
+data: data/processed/airbility_uav_detection_trainval_yolo/data.yaml
+imgsz: 1280
+profile_shape: [720, 1280]
+rect: true
+epochs: 40
+stop_after_epoch: 32
+save_period: 1
+batch: 4
+device: 0
+workers: 8
+seed: 42
+deterministic: true
+patience: 0
+pretrained: true
+freeze_bn: false
+optimizer: AdamW
+lr0: 0.0005
+lrf: 0.01
+weight_decay: 0.0005
+warmup_epochs: 2
+cos_lr: true
+cache: false
+mosaic: 0.0
+mixup: 0.0
+copy_paste: 0.0
+degrees: 0.0
+shear: 0.0
+perspective: 0.0
+translate: 0.05
+scale: 0.2
+fliplr: 0.5
+flipud: 0.0
+erasing: 0.0
+hsv_h: 0.015
+hsv_s: 0.4
+hsv_v: 0.3

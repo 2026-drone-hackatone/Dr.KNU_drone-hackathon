@@ -1,0 +1,6 @@
+# 개발 환경: Python 3.10.21, PyTorch 2.14.0+cu130, RTX 5060 Ti 16 GB
+ultralytics==8.4.138
+opencv-python>=4.10
+numpy>=2.0
+pillow>=10
+pyyaml>=6

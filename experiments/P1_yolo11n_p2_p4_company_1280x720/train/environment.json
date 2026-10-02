@@ -1,0 +1,33 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "torch": "2.14.0+cu130",
+  "ultralytics": "8.4.138",
+  "cuda_runtime": "13.0",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "gpu_memory_bytes": 17102864384,
+  "git_commit": "not-a-git-worktree",
+  "command": "/home/user/workspace/drone_comp/src/train/train_detector.py --config configs/train/P1_yolo11n_p2_p4_company_1280x720.yaml",
+  "detect_strides": [
+    4,
+    8,
+    16
+  ],
+  "parameters": 1939145,
+  "gflops": 22.88571392,
+  "input_shape": [
+    736,
+    1280
+  ],
+  "pretrained_transfer": {
+    "transferred_tensors": 297,
+    "source_tensors": 499,
+    "target_tensors": 493
+  },
+  "class_names": {
+    "0": "quad_civil",
+    "1": "fixed_wing",
+    "2": "target_uav"
+  }
+}

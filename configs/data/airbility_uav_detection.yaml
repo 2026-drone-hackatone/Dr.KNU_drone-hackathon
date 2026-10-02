@@ -1,0 +1,17 @@
+name: airbility_uav_detection
+source_root: data/airbility_uav_detection_dataset
+output_root: data/processed/airbility_uav_detection_yolo
+report: data/reports/airbility_uav_detection_preprocessing.json
+link_mode: hardlink
+seed: 42
+source_frame_policy: available_images_only
+
+names:
+  0: quad_civil
+  1: fixed_wing
+  2: target_uav
+
+# Preserve the provider split: all supplied train detection samples are used for
+# training and the supplied val samples are used for validation.
+provider_val_destination: val
+excluded_sequences: []

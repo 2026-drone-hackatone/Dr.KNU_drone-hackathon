@@ -1,0 +1,8 @@
+{
+  "selection_metric": "metrics/mAP50(B)",
+  "value": 0.61802,
+  "epoch": 11,
+  "checkpoint": "weights/best_map50.pt",
+  "best": "weights/best.pt",
+  "previous_default_best": "weights/best_map50-95.pt"
+}

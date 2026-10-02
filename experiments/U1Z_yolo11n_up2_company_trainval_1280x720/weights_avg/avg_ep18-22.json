@@ -1,0 +1,19 @@
+{
+  "run": "/home/user/workspace/drone_comp/runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720",
+  "epochs": [
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "checkpoints": [
+    "weights/epoch17.pt",
+    "weights/epoch18.pt",
+    "weights/epoch19.pt",
+    "weights/epoch20.pt",
+    "weights/epoch21.pt"
+  ],
+  "averaged_tensors": 418,
+  "output": "/home/user/workspace/drone_comp/runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720/weights_avg/avg_ep18-22.pt"
+}

@@ -1,0 +1,28 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "torch": "2.14.0+cu130",
+  "ultralytics": "8.4.138",
+  "cuda_runtime": "13.0",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "gpu_memory_bytes": 17102864384,
+  "git_commit": "not-a-git-worktree",
+  "command": "/home/user/workspace/drone_interceptor/src/train/train_detector.py --config configs/train/A4_yolo11n_coco_airbility_provider_split_1280x720.yaml",
+  "detect_strides": [
+    8,
+    16,
+    32
+  ],
+  "parameters": 2590425,
+  "gflops": 15.13769472,
+  "input_shape": [
+    736,
+    1280
+  ],
+  "class_names": {
+    "0": "quad_civil",
+    "1": "fixed_wing",
+    "2": "target_uav"
+  }
+}
