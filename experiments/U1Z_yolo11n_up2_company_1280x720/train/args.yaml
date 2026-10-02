@@ -1,10 +1,10 @@
 task: detect
 mode: train
 model: /home/user/workspace/drone_comp/configs/model/yolo11n_up2.yaml
-data: /home/user/workspace/drone_comp/data/processed/airbility_uav_detection_trainval_yolo/data.yaml
+data: /home/user/workspace/drone_comp/data/processed/airbility_uav_detection_yolo/data.yaml
 epochs: 40
 time: null
-patience: 0
+patience: 15
 batch: 4
 imgsz: 1280
 save: true
@@ -13,7 +13,7 @@ cache: false
 device: '0'
 workers: 8
 project: /home/user/workspace/drone_comp/runs/detection
-name: U1Z_yolo11n_up2_company_trainval_1280x720
+name: U1_yolo11n_up2_company_1280x720
 exist_ok: false
 pretrained: true
 cls_remap: true
@@ -113,4 +113,4 @@ auto_augment: randaugment
 erasing: 0.0
 cfg: null
 tracker: tracktrack.yaml
-save_dir: /home/user/workspace/drone_comp/runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720
+save_dir: /home/user/workspace/drone_comp/runs/detection/U1_yolo11n_up2_company_1280x720

@@ -1,5 +1,5 @@
 {
-  "run": "/home/user/workspace/drone_comp/runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720",
+  "run": "/home/user/workspace/drone_comp/runs/detection/U1_yolo11n_up2_company_1280x720",
   "epochs": [
     18,
     19,
@@ -15,5 +15,5 @@
     "weights/epoch21.pt"
   ],
   "averaged_tensors": 418,
-  "output": "/home/user/workspace/drone_comp/runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720/weights_avg/avg_ep18-22.pt"
+  "output": "/home/user/workspace/drone_comp/runs/detection/U1_yolo11n_up2_company_1280x720/weights_avg/avg_ep18-22.pt"
 }

@@ -8,11 +8,11 @@
   "gpu": "NVIDIA GeForce RTX 5060 Ti",
   "gpu_memory_bytes": 17102864384,
   "git_commit": "not-a-git-worktree",
-  "command": "/home/user/workspace/drone_comp/src/train/train_detector.py --config configs/train/U1Z_yolo11n_up2_company_trainval_1280x720.yaml --device 0 --workers 8",
+  "command": "/home/user/workspace/drone_comp/src/train/train_detector.py --config configs/train/U1_yolo11n_up2_company_1280x720.yaml --device 0 --workers 8",
   "detect_strides": [
-    4.0,
-    8.0,
-    16.0
+    4,
+    8,
+    16
   ],
   "parameters": 2590425,
   "gflops": 63.182592,
@@ -26,7 +26,6 @@
     "target_tensors": 499,
     "layer_offset": 1
   },
-  "stop_after_epoch": 32,
   "class_names": {
     "0": "quad_civil",
     "1": "fixed_wing",

@@ -11,11 +11,11 @@
 | N1 | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO `yolo11n.pt` | company train | 4/8/16/32 | 2,667,084 | 24.23 | 0.6241 (31) | – |
 | P1 | YOLO11n P2–P4 (P5 head 제거) | COCO `yolo11n.pt` | company train | 4/8/16 | 1,939,145 | 22.89 | 0.6477 (9) | 0.6491 |
 | T0 | YOLO11s stock | COCO `yolo11s.pt` | company train | 8/16/32 | 9,428,953 | 50.21 | 0.6637 (19) | 0.6629* |
-| U1Z | YOLO11n + 내부 x2 bilinear upsample | A0 best.pt (layer offset 1) | company train **+ val** | 4/8/16 | 2,590,425 | 64.70 | 0.7652 (29, in-sample) | – |
+| U1Z | YOLO11n + 내부 x2 bilinear upsample | A0 best.pt (layer offset 1) | company train | 4/8/16 | 2,590,425 | 64.70 | 0.6973 (19) | **0.6957** |
 
 - Params / FLOPs는 `best.pt`를 Ultralytics `get_flops`(thop)로 직접 측정한 값이다. 736x1280은 `imgsz=1280, rect=True`에서 1280x720 입력이 stride 32 배수로 패딩된 실제 추론 크기다. 640 기준 A0는 6.50 GFLOPs로 Ultralytics 공식 YOLO11n 표와 일치한다.
-- 학습 로그 mAP50은 각 run의 `best_map50.json`(EMA, 학습 중 val). 독립 평가는 `src/evaluation/evaluate_company.py`(imgsz 1280, rect, conf 0.001, iou 0.7, max_det 300, TTA off) JSON이며 A0, P1만 보존돼 있다. T0의 *0.6629는 다른 머신에서 기록된 값으로 JSON이 없다.
-- **U1Z는 기업 val을 학습에 포함한 최종 제출용 재학습이다.** 학습 중 val 점수(0.7652)는 in-sample이므로 다른 행과 비교하지 않는다. 같은 구조를 provider split으로 학습한 U1의 독립 평가는 0.6957이다(`docs/experiment_summary_2026-09-21.md`). 제출 체크포인트는 epoch 18–22 평균(`weights_avg/avg_ep18-22.pt`)이며 생성 기록은 `experiments/U1Z_.../weights_avg/avg_ep18-22.json`에 있다.
+- 학습 로그 mAP50은 각 run의 `best_map50.json`(EMA, 학습 중 val). 독립 평가는 `src/evaluation/evaluate_company.py`(imgsz 1280, rect, conf 0.001, iou 0.7, max_det 300, TTA off) JSON이며 A0, P1, U1Z가 보존돼 있다. T0의 *0.6629는 다른 머신에서 기록된 값으로 JSON이 없다.
+- U1Z는 다른 네 모델과 같은 provider split(기업 train 55 시퀀스만 학습, 기업 val 14 시퀀스로 선택·평가)으로 학습한다. 모든 행이 같은 val을 기준으로 하므로 직접 비교할 수 있다. `experiments/U1Z_.../`의 기록은 이 설정과 동일한 레시피로 수행한 로컬 run(로컬 이름 `U1`)의 산출물이며, epoch 18–22 평균 체크포인트의 독립 평가는 0.6903으로 best.pt(0.6957)보다 낮았다(`docs/experiment_results_2026-09-30.md`).
 
 클래스별 독립 평가 AP50:
 
@@ -23,6 +23,7 @@
 |---|---:|---:|---:|---:|---:|
 | A0 | 0.4253 | 0.9312 | 0.5006 | 0.8228 | 0.6028 |
 | P1 | 0.4670 | 0.9377 | 0.5424 | 0.8161 | 0.6177 |
+| U1Z | 0.5410 | 0.9565 | 0.5895 | 0.8479 | 0.6605 |
 
 ## 2. 저장소 구성
 
@@ -30,7 +31,7 @@
 configs/
   train/        다섯 실험의 학습 설정 (id, 구조, 초기값, 데이터, 하이퍼파라미터)
   model/        yolo11n_mapped_p2.yaml (N1), yolo11n_p2_p4.yaml (P1), yolo11n_up2.yaml (U1Z)
-  data/         기업 데이터 전처리 설정 (provider split / train+val 합산)
+  data/         기업 데이터 전처리 설정 (provider split 보존)
 src/
   data/         prepare_airbility_dataset.py (6열 라벨 → 5열 YOLO, split 보존), validate_yolo_dataset.py
   train/        train_detector.py (재현 가능한 학습, mAP50 기준 best.pt), average_checkpoints.py (epoch 평균)
@@ -39,9 +40,10 @@ src/
 scripts/        09_prepare_airbility_dataset.sh
 experiments/<RUN_ID>/
   train/        best_map50.json, results.csv, environment.json, experiment_config.yaml, args.yaml, results.png
-  eval_company_val_1280/   독립 평가 metrics.json, PR curve, confusion matrix (A0, P1)
-  weights_avg/  U1Z epoch 평균 기록
-docs/           실험 전체 요약(2026-09-21), 전체 실험 결과 정리(2026-09-30), Z 재학습 설계
+  eval_company_val_1280/   독립 평가 metrics.json, PR curve, confusion matrix (A0, P1, U1Z)
+  weights_avg/  U1Z epoch 18–22 평균 체크포인트 생성 기록
+docs/           실험 전체 요약(2026-09-21), 전체 실험 결과 정리(2026-09-30) — 전체 프로젝트의 기록 원문.
+                이 문서들에서 'U1'이 이 저장소의 U1Z(train만 학습)에 해당하고, 문서의 'U1Z'는 train+val 재학습을 뜻한다.
 ```
 
 `runs/`, `data/processed/`, `*.pt`는 `.gitignore`로 제외된다. 학습 산출물의 요약만 `experiments/`에 복사했다.
@@ -61,12 +63,9 @@ pip install -r requirements.txt
 기업 원본을 `data/airbility_uav_detection_dataset/{images,labels}/{train,val}/<sequence>/`에 둔다 (라벨은 6열 `cls cx cy w h track_id`).
 
 ```bash
-# provider split 보존 (A0, N1, P1, T0 용)
+# provider split 보존 (다섯 실험 공통: train = 기업 train, val = 기업 val)
 bash scripts/09_prepare_airbility_dataset.sh
 #   -> data/processed/airbility_uav_detection_yolo/data.yaml + data/reports/*.json
-
-# train + val 합산 (U1Z 용, val 폴더는 in-sample 모니터링용 복사본)
-python -m src.data.prepare_airbility_dataset --config configs/data/airbility_uav_detection_trainval.yaml
 ```
 
 ## 5. 학습
@@ -79,11 +78,13 @@ python -m src.train.train_detector --config configs/train/N1_yolo11n_mapped_p2_c
 python -m src.train.train_detector --config configs/train/P1_yolo11n_p2_p4_company_1280x720.yaml
 python -m src.train.train_detector --config configs/train/T0_yolo11s_coco_airbility_provider_split_1280x720.yaml
 
-# U1Z는 A0 best.pt를 초기값으로 쓰므로 A0 학습 후 실행 (stop_after_epoch: 32 로 horizon 고정)
-python -m src.train.train_detector --config configs/train/U1Z_yolo11n_up2_company_trainval_1280x720.yaml
+# U1Z는 A0 best.pt를 초기값으로 쓰므로 A0 학습 후 실행 (40 epoch cosine, patience 15, val mAP50 기준 best.pt)
+python -m src.train.train_detector --config configs/train/U1Z_yolo11n_up2_company_1280x720.yaml
+
+# (선택) epoch 평균 체크포인트. U1Z에서는 best.pt보다 낮았으므로 참고용
 python -m src.train.average_checkpoints \
-  --run runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720 --epochs 18-22 \
-  --output runs/detection/U1Z_yolo11n_up2_company_trainval_1280x720/weights_avg/avg_ep18-22.pt
+  --run runs/detection/U1Z_yolo11n_up2_company_1280x720 --epochs 18-22 \
+  --output runs/detection/U1Z_yolo11n_up2_company_1280x720/weights_avg/avg_ep18-22.pt
 ```
 
 `train_detector.py`는 validation mAP50 최고 checkpoint를 `weights/best_map50.pt`에 저장하고 `best.pt`로 복사한다. 각 run에는 `experiment_config.yaml`, `environment.json`(패키지 버전, GPU, params, GFLOPs, stride), `command.txt`가 함께 기록된다.
@@ -105,5 +106,4 @@ python -m src.evaluation.evaluate_company \
 
 | ID | checkpoint | SHA256 | 링크 |
 |---|---|---|---|
-| U1Z | `weights_avg/avg_ep18-22.pt` | `ed2107d48f3842974db8c41a2ad02cc1c9d8b6c62575a31a1e79af0af0c3f0b5` | (추가 예정) |
-| U1Z | `weights/best.pt` | `718cef051d8338036cdda3ee3caa78bcfa7cef43e0bccb5900fc55bfdb92cc2a` | (추가 예정) |
+| U1Z | `weights/best.pt` (epoch 19) | `7458d9b1603e8b05eb8215cbcf3d419106b629faa7c4c6111fb734eb251a43ea` | (추가 예정) |

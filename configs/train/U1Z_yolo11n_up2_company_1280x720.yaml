@@ -1,0 +1,52 @@
+# U1Z = YOLO11n with an internal x2 bilinear upsample (configs/model/yolo11n_up2.yaml).
+# Input stays imgsz 1280 / 1280x720 files; the network sees 2560x1440, so Detect
+# strides are [4, 8, 16] in input pixels. ~63-65 GFLOPs at 720x1280 (YOLO11s-class
+# compute) -> deployment candidate for Jetson Orin Nano Super.
+# Data: provider split ONLY (train = provider train 55 sequences, val = provider
+# val 14 sequences). The per-epoch val mAP is therefore an out-of-sample metric,
+# best.pt is selected on it, and early stopping (patience 15) is enabled.
+# Init: A0 best.pt (nano 3-class @1280) transfers 499/499 tensors via
+# weights_layer_offset: 1. If that run is missing, use weights: yolo11n.pt
+# (448/499, Detect re-initialised) and raise epochs to 60.
+# Memory: batch 4 first; on OOM use batch 2 AND freeze_bn: true.
+id: U1Z_yolo11n_up2_company_1280x720
+family: detection
+architecture: yolo11n_up2
+model: configs/model/yolo11n_up2.yaml
+weights: runs/detection/A0_yolo11n_coco_airbility_provider_split_1280x720/weights/best.pt
+weights_layer_offset: 1
+data: data/processed/airbility_uav_detection_yolo/data.yaml
+imgsz: 1280
+profile_shape: [720, 1280]
+rect: true
+epochs: 40
+save_period: 1
+batch: 4
+device: 0
+workers: 8
+seed: 42
+deterministic: true
+patience: 15
+pretrained: true
+freeze_bn: false
+optimizer: AdamW
+lr0: 0.0005
+lrf: 0.01
+weight_decay: 0.0005
+warmup_epochs: 2
+cos_lr: true
+cache: false
+mosaic: 0.0
+mixup: 0.0
+copy_paste: 0.0
+degrees: 0.0
+shear: 0.0
+perspective: 0.0
+translate: 0.05
+scale: 0.2
+fliplr: 0.5
+flipud: 0.0
+erasing: 0.0
+hsv_h: 0.015
+hsv_s: 0.4
+hsv_v: 0.3

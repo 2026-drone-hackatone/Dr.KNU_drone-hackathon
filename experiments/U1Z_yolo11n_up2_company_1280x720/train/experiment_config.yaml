@@ -1,24 +1,23 @@
-id: U1Z_yolo11n_up2_company_trainval_1280x720
+id: U1_yolo11n_up2_company_1280x720
 family: detection
 architecture: yolo11n_up2
 model: configs/model/yolo11n_up2.yaml
 weights: runs/detection/A0_yolo11n_coco_airbility_provider_split_1280x720/weights/best.pt
 weights_layer_offset: 1
-data: data/processed/airbility_uav_detection_trainval_yolo/data.yaml
+data: data/processed/airbility_uav_detection_yolo/data.yaml
 imgsz: 1280
 profile_shape:
 - 720
 - 1280
 rect: true
 epochs: 40
-stop_after_epoch: 32
 save_period: 1
 batch: 4
 device: '0'
 workers: 8
 seed: 42
 deterministic: true
-patience: 0
+patience: 15
 pretrained: true
 freeze_bn: false
 optimizer: AdamW

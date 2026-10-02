@@ -1,0 +1,48 @@
+{
+  "model": "/home/user/workspace/drone_comp/runs/detection/U1_yolo11n_up2_company_1280x720/weights/best.pt",
+  "data": "/home/user/workspace/drone_comp/data/processed/airbility_uav_detection_yolo/data.yaml",
+  "split": "val",
+  "imgsz": 1280,
+  "rect": true,
+  "batch": 4,
+  "augment": false,
+  "single_cls": false,
+  "conf": 0.001,
+  "iou": 0.7,
+  "overall": {
+    "precision": 0.8478940441687581,
+    "recall": 0.6605244118506672,
+    "map50": 0.6956898583712835,
+    "map50_95": 0.45712428679021083
+  },
+  "classes": {
+    "0": {
+      "name": "quad_civil",
+      "precision": 0.7875992804326813,
+      "recall": 0.5100286532951289,
+      "map50": 0.5410499881859019,
+      "map50_95": 0.23793151681590574
+    },
+    "1": {
+      "name": "fixed_wing",
+      "precision": 0.9362931461155262,
+      "recall": 0.9173098125689085,
+      "map50": 0.9564737022622968,
+      "map50_95": 0.749479929301816
+    },
+    "2": {
+      "name": "target_uav",
+      "precision": 0.8197897059580668,
+      "recall": 0.5542347696879644,
+      "map50": 0.5895458846656516,
+      "map50_95": 0.3839614142529108
+    }
+  },
+  "speed_ms_per_image": {
+    "preprocess": 0.8352860486290107,
+    "inference": 18.12268193179431,
+    "loss": 0.0013737596054044033,
+    "postprocess": 0.6211264912504703
+  },
+  "save_dir": "/home/user/workspace/drone_comp/runs/evaluation/U1_yolo11n_up2_company_val_1280"
+}
