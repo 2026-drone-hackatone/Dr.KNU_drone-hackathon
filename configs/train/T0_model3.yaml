@@ -1,4 +1,4 @@
-id: T0_yolo11s_coco_airbility_provider_split_1280x720
+id: T0_model3
 family: detection
 architecture: yolo11s
 weights: yolo11s.pt

@@ -1,7 +1,6 @@
-id: P1_yolo11n_p2_p4_company_1280x720
+id: A0_baseline
 family: detection
-architecture: yolo11n_p2_p4
-model: configs/model/yolo11n_p2_p4.yaml
+architecture: yolo11n
 weights: yolo11n.pt
 data: data/processed/airbility_uav_detection_yolo/data.yaml
 imgsz: 1280

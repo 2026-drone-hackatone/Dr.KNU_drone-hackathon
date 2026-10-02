@@ -7,8 +7,8 @@ constraints. Only floating-point tensors are averaged; integer buffers
 
 Example:
     python -m src.train.average_checkpoints \
-        --run runs/detection/U2_yolo11s_up2_from_T0_company_1280x720 \
-        --epochs 9-20 --output runs/detection/U2_.../weights_avg/avg_ep9-20.pt
+        --run runs/detection/U1Z_ours \
+        --epochs 18-22 --output runs/detection/U1Z_ours/weights_avg/avg_ep18-22.pt
 """
 from __future__ import annotations
 
