@@ -5,17 +5,13 @@
 
 ## 1. 모델 요약
 
-| ID  | 설정 파일       | 구조                                                           | 초기값                      | 학습 데이터   | Detect stride |    Params | FLOPs(B) @736x1280 | mAP50  |
-| --- | --------------- | -------------------------------------------------------------- | --------------------------- | ------------- | ------------- | --------: | -----------------: | ----------------------: | ---------------: |
-| A0  | `A0_baseline` | YOLO11n stock                                                  | COCO`yolo11n.pt`          | company train | 8/16/32       | 2,590,425 |              15.14 |            0.6167 |
-| N1  | `N1_model1`   | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO`yolo11n.pt`          | company train | 4/8/16/32     | 2,667,084 |              24.23 |            0.6179 |
-| P1  | `P1_model2`   | YOLO11n P2–P4 (P5 head 제거)                                  | COCO`yolo11n.pt`          | company train | 4/8/16        | 1,939,145 |              22.89 |             0.6411|
-| T0  | `T0_model3`   | YOLO11s stock                                                  | COCO`yolo11s.pt`          | company train | 8/16/32       | 9,428,953 |              50.21 |            0.6602 |
-| U1Z | `U1Z_ours`    | YOLO11n + 내부 x2 bilinear upsample                            | A0 best.pt (layer offset 1) | company train | 4/8/16        | 2,590,425 |              64.70 |            0.7122 | 
-
-- 다섯 모델 모두 같은 provider split(기업 train 55 시퀀스 학습, 기업 val 14 시퀀스로 선택·평가)을 사용하므로 직접 비교할 수 있다.
-- Params / FLOPs는 `best.pt`를 Ultralytics `get_flops`(thop)로 직접 측정한 값이다. 736x1280은 `imgsz=1280, rect=True`에서 1280x720 입력이 stride 32 배수로 패딩된 실제 추론 크기다. 640 기준 A0는 6.50 GFLOPs로 Ultralytics 공식 YOLO11n 표와 일치한다.
-- 학습 로그 mAP50은 각 run의 `best_map50.json`(EMA, 학습 중 val). 독립 평가는 `src/evaluation/evaluate_company.py`(imgsz 1280, rect, conf 0.001, iou 0.7, max_det 300, TTA off)로 `best.pt`를 다시 평가한 값이다. T0의 *0.6629는 다른 머신에서 기록된 값이다.
+| ID | 설정 파일 | 구조 | 초기값 | 학습 데이터 | Detect stride | Params | FLOPs(B) @736x1280 | mAP50 |
+| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: |
+| A0 | `A0_baseline` | YOLO11n stock | COCO `yolo11n.pt` | company train | 8/16/32 | 2,590,425 | 15.14 | 0.6167 |
+| N1 | `N1_model1` | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO `yolo11n.pt` | company train | 4/8/16/32 | 2,667,084 | 24.23 | 0.6179 |
+| P1 | `P1_model2` | YOLO11n P2–P4 (P5 head 제거) | COCO `yolo11n.pt` | company train | 4/8/16 | 1,939,145 | 22.89 | 0.6411 |
+| T0 | `T0_model3` | YOLO11s stock | COCO `yolo11s.pt` | company train | 8/16/32 | 9,428,953 | 50.21 | 0.6602 |
+| U1Z | `U1Z_ours` | YOLO11n + 내부 x2 bilinear upsample | A0 best.pt (layer offset 1) | company train | 4/8/16 | 2,590,425 | 64.70 | 0.7122 |
 
 ## 2. 저장소 구성
 
