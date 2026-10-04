@@ -84,11 +84,6 @@ python -m src.train.train_detector --config configs/train/T0_model3.yaml
 # U1Z_ours는 runs/detection/A0_baseline/weights/best.pt 를 초기값으로 쓰므로 A0 학습 후 실행
 # (40 epoch cosine, patience 15, val mAP50 기준 best.pt)
 python -m src.train.train_detector --config configs/train/U1Z_ours.yaml
-
-# (선택) epoch 평균 체크포인트. 해당 epoch 파일이 존재해야 하며 성능은 별도 평가
-python -m src.train.average_checkpoints \
-  --run runs/detection/U1Z_ours --epochs 18-22 \
-  --output runs/detection/U1Z_ours/weights_avg/avg_ep18-22.pt
 ```
 
 `train_detector.py`는 validation mAP50 최고 checkpoint를 `weights/best_map50.pt`에 저장하고 `best.pt`로 복사한다. 각 run에는 `experiment_config.yaml`, `environment.json`, `command.txt`가 함께 기록된다.
@@ -98,8 +93,6 @@ python -m src.train.average_checkpoints \
 ```bash
 python -m src.train.train_detector --resume runs/detection/A0_baseline/weights/last.pt
 ```
-
-평균화의 `--epochs 18-22`는 1-based epoch이며 `weights/epoch17.pt`부터 `epoch21.pt`까지 읽는다. 평균 가중치는 추론·평가용이며 학습 재개용 optimizer를 포함하지 않는다.
 
 ## 6. 평가
 
