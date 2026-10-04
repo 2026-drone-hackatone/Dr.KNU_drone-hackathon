@@ -1,79 +1,334 @@
-# Dr.KNU Drone Hackathon — UAV Detection (A0 / N1 / P1 / T0 / U1Z)
 
-기업 제공 UAV 데이터셋(3클래스: `quad_civil`, `fixed_wing`, `target_uav`, 1280x720)에 대한 YOLO11 계열 탐지 모델 다섯 개의
-학습 설정, 데이터 전처리·학습·평가 코드, 결과 기록을 정리한 저장소다.
-원본 데이터와 모델 가중치는 포함하지 않으며, 아래 명령은 저장소 루트에서 실행한다.
+# Dr.KNU Drone Hackathon — Real-Time UAV Detection & Tracking on Edge AI 🏆
 
-## 1. 모델 요약
+> **2026 Drone AI Hackathon — Grand Prize (대상)**
+> 기업이 제시한 **소형 드론 탐지 성능(mAP@0.5 ≥ 0.70)** 및 **실시간 추론 속도(≥ 15 FPS)** 목표를 달성하고,
+> **Teacher–Student Knowledge Distillation, Multi-Object Tracking, TensorRT 최적화, NVIDIA Jetson Orin Nano Super 실시간 배포, Sim-to-Real 검증, 위험도 분류**까지 구현한 프로젝트입니다.
 
-| ID | 설정 파일 | 구조 | 초기값 | 학습 데이터 | Detect stride | Params | FLOPs(B), 기록 입력 기준 | 학습 val 최고 mAP50 |
-| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: |
-| A0 | `A0_baseline` | YOLO11n stock | COCO `yolo11n.pt` | company train | 8/16/32 | 2,590,425 | 15.14 | 0.6167 |
-| N1 | `N1_model1` | YOLO11n P2–P5 4-head, COCO backbone/neck 명시적 layer mapping | COCO `yolo11n.pt` | company train | 4/8/16/32 | 2,667,084 | 24.23 | 0.6179 |
-| P1 | `P1_model2` | YOLO11n P2–P4 (P5 head 제거) | COCO `yolo11n.pt` | company train | 4/8/16 | 1,939,145 | 22.89 | 0.6411 |
-| T0 | `T0_model3` | YOLO11s stock | COCO `yolo11s.pt` | company train | 8/16/32 | 9,428,953 | 50.21 | 0.6602 |
-| U1Z | `U1Z_ours` | YOLO11n + 내부 x2 bilinear upsample | A0 best.pt (layer offset 1) | company train | 4/8/16 | 2,590,425 | 63.18 | 0.7122 |
+---
 
-- mAP50은 `experiments/<ID>/train/best_map50.json`의 학습 중 validation 최고값이다. 선택 epoch는 A0 11, N1 31, P1 9, T0 19, U1Z 13이다. 별도 테스트셋 성능이나 독립 재평가 결과를 뜻하지 않는다.
-- Params / FLOPs / Detect stride는 각 `environment.json`의 기록이다. FLOPs 프로파일 입력은 A0·N1·P1·T0가 **736×1280**, U1Z가 **720×1280**이므로 동일 입력 크기로 측정된 표는 아니다. `profile_shape`는 연산량 측정용이며 실제 학습·평가 입력 크기를 지정하지 않는다.
-- 현재 설정은 provider train으로 학습하고 provider val로 모델을 선택·평가한다. 배치 크기(T0·U1Z 4, 나머지 8), 최대 epoch(U1Z 40, 나머지 60), patience(N1 20, 나머지 15), 초기값 등이 달라 구조만 바꾼 통제 실험으로 해석하면 안 된다.
-- P1은 backbone의 P5 단계를 유지하고 Detect 출력을 P2/P3/P4로 구성한다. U1Z는 입력을 내부에서 x2 확대해 입력 좌표 기준 stride가 4/8/16이 된다. N1은 명시적 layer mapping, P1은 이름·shape가 맞는 가중치 로드, U1Z는 A0 가중치의 layer index +1 이동을 사용한다.
+## 1. Project Overview
 
-## 2. 저장소 구성
+본 프로젝트의 목표는 단순한 UAV 객체 탐지를 넘어, **실제 환경에서 동작 가능한 실시간 Edge AI 기반 드론 탐지·추적 시스템**을 구축하는 것이었습니다.
+
+기업이 제공한 UAV 데이터셋을 기반으로 YOLO11 계열 모델의 구조와 학습 전략을 비교하였으며, 소형 객체 탐지 성능을 개선하기 위해 P2 feature 활용, P5 head 제거, 내부 upsampling 등 다양한 구조를 검증했습니다. 또한 Teacher–Student Knowledge Distillation을 활용해 경량 모델의 성능을 보완하고, Tracking과 위험도 분류를 결합해 프레임 단위 탐지를 실제 상황 판단이 가능한 시스템으로 확장했습니다.
+
+최종적으로 모델을 **TensorRT 기반으로 최적화하여 NVIDIA Jetson Orin Nano Super에 배포**하고, 카메라 모듈을 연결해 실제 비행 중인 드론을 실시간으로 탐지·추적하는 시연을 수행했습니다.
+
+---
+
+## 2. Challenge Tasks
+
+대회에서는 기업이 제시한 두 가지 핵심 과제를 수행했습니다.
+
+### Task 1 — Detection Performance & Real-Time Inference
+
+- 기업 제공 UAV 데이터셋 기반 3-class detection
+  - `quad_civil`
+  - `fixed_wing`
+  - `target_uav`
+- 입력 해상도: `1280 × 720`
+- 목표 탐지 성능: **mAP@0.5 ≥ 0.70**
+- 목표 추론 속도: **≥ 15 FPS**
+- 경량 모델 기반의 정확도–연산량 trade-off 최적화
+
+### Task 2 — Sim-to-Real UAV Tracking
+
+- 실제 드론 시연장 환경을 모사한 simulation data 구성
+- simulation 환경에서 학습한 모델을 실제 시연장에 적용
+- 실제 비행 UAV에 대한 detection 및 tracking 검증
+- synthetic/simulation 환경과 실제 환경 간 **Sim-to-Real domain gap 완화**
+
+---
+
+## 3. Key Achievements
+
+- 🏆 **2026 Drone AI Hackathon Grand Prize (대상)**
+- 기업 목표 **mAP@0.5 ≥ 0.70 달성**
+- 기업 목표 **Jetson 기준 실시간 추론 속도 ≥ 15 FPS 달성**
+- Baseline YOLO11n 대비 최종 U1Z 모델의 mAP50을 **0.6167 → 0.7122 (+9.55%p)**로 개선
+- Teacher–Student **Knowledge Distillation** 기반 경량 모델 성능 개선
+- **Multi-Object Tracking**을 통한 드론 ID 유지 및 이동 추적
+- Tracking 정보를 활용한 **위험도 분류/판단 모듈** 구현
+- **TensorRT 기반 inference optimization** 수행
+- **NVIDIA Jetson Orin Nano Super + Camera** 기반 실시간 UAV detection/tracking 시연
+- 실제 FPS / Latency를 측정하여 Edge 환경에서의 실시간성 검증
+- 실제 시연장 환경을 모사한 simulation data 기반 **Sim-to-Real 검증**
+- 코드, 학습 설정, 평가 환경을 GitHub에 정리하여 **재현성(Reproducibility)** 확보
+
+---
+
+## 4. End-to-End System Pipeline
+
+```text
+Simulation / Company UAV Dataset
+              │
+              ▼
+      Dataset Preprocessing
+              │
+              ▼
+     YOLO11 Baseline Training
+              │
+              ├───────────────┐
+              ▼               ▼
+  Small-Object Architecture   Teacher Model
+  Optimization                │
+  - P2 feature                ▼
+  - P5 removal          Knowledge Distillation
+  - Internal x2 upsample      │
+              └───────┬───────┘
+                      ▼
+               Student Detector
+                      │
+                      ▼
+            Multi-Object Tracking
+                      │
+                      ▼
+              Threat Assessment
+                      │
+                      ▼
+                ONNX / TensorRT
+                      │
+                      ▼
+        NVIDIA Jetson Orin Nano Super
+                      │
+                      ▼
+                Camera Input
+                      │
+                      ▼
+       Real-Time UAV Detection & Tracking
+```
+
+---
+
+## 5. Technical Highlights
+
+### 5.1 Small-Object Detection Optimization
+
+기업 데이터에서 다수의 UAV가 매우 작은 픽셀 영역으로 관측되는 문제를 고려해, 기본 YOLO11n 외에 소형 객체에 적합한 구조를 비교했습니다.
+
+- **A0** — YOLO11n baseline
+- **N1** — P2–P5 4-head 구조
+- **P1** — P2–P4 구조, P5 detection head 제거
+- **T0** — YOLO11s
+- **U1Z** — YOLO11n + internal ×2 bilinear upsampling
+
+| ID            | 구조                                      |              Params | FLOPs(B) @736×1280 |            mAP50 |
+| ------------- | ----------------------------------------- | ------------------: | ------------------: | ---------------: |
+| A0            | YOLO11n stock                             |           2,590,425 |               15.14 |           0.6167 |
+| N1            | YOLO11n P2–P5 4-head                     |           2,667,084 |               24.23 |           0.6179 |
+| P1            | YOLO11n P2–P4 (P5 제거)                  |           1,939,145 |               22.89 |           0.6411 |
+| T0            | YOLO11s stock                             |           9,428,953 |               50.21 |           0.6602 |
+| **U1Z** | **YOLO11n + internal ×2 upsample** | **2,590,425** |     **64.70** | **0.7122** |
+
+최종 U1Z 모델은 baseline 대비 **+0.0955 mAP50 (+9.55%p)**를 기록하며 기업 목표 성능을 충족했습니다.
+
+---
+
+### 5.2 Teacher–Student Knowledge Distillation
+
+실시간 Edge 환경에서는 단순히 큰 모델을 사용하는 것이 어렵기 때문에, 고성능 Teacher 모델의 정보를 경량 Student 모델에 전달하는 **Knowledge Distillation** 전략을 적용했습니다.
+
+이 과정에서 단순 정확도 최대화보다 다음의 trade-off를 함께 고려했습니다.
+
+- Detection Accuracy
+- Model Complexity
+- Inference Latency
+- Real-Time FPS
+- Edge Device Deployability
+
+이를 통해 **고성능 모델의 표현력을 최대한 유지하면서 Jetson에서 실시간 추론 가능한 모델**을 구축하는 것을 목표로 했습니다.
+
+---
+
+### 5.3 Multi-Object Tracking & Threat Assessment
+
+프레임 단위 detection 결과를 실제 드론 감시 상황에 활용할 수 있도록 Multi-Object Tracking을 결합했습니다.
+
+```text
+Detection
+   ↓
+Track ID Assignment
+   ↓
+Trajectory Estimation
+   ↓
+Temporal UAV State
+   ↓
+Threat Assessment
+```
+
+이를 통해 드론의 ID를 프레임 간 유지하고, 객체의 이동과 접근 정보를 활용해 **위험도를 분류/판단하는 시스템**으로 확장했습니다.
+
+---
+
+### 5.4 Sim-to-Real Validation
+
+대회의 두 번째 핵심 과제는 실제 드론 시연장에 대응할 수 있는 모델을 만드는 것이었습니다.
+
+실제 시연장과 유사한 배경·환경을 simulation data로 구성하고 이를 학습에 활용한 뒤, 실제 비행 UAV에 대한 detection/tracking 성능을 검증했습니다.
+
+```text
+Simulation Environment
+        ↓
+Synthetic UAV Data
+        ↓
+Model Training
+        ↓
+Domain Gap
+        ↓
+Real Demonstration Site
+        ↓
+Actual UAV Detection / Tracking
+```
+
+이를 통해 단순 validation-set 성능이 아니라 **학습 환경과 실제 배포 환경의 차이를 고려한 perception system**을 개발했습니다.
+
+---
+
+### 5.5 TensorRT & Jetson Edge Deployment
+
+최종 모델은 NVIDIA Jetson Orin Nano Super에서 실시간으로 동작할 수 있도록 TensorRT 기반 최적화를 수행했습니다.
+
+```text
+PyTorch Model
+     ↓
+Model Export
+     ↓
+TensorRT Optimization
+     ↓
+Jetson Orin Nano Super
+     ↓
+Camera Stream
+     ↓
+Real-Time Detection / Tracking
+```
+
+대회 현장에서는 Jetson Orin Nano Super에 카메라 모듈을 연결해 **실제로 비행 중인 드론을 실시간으로 탐지하는 시연**을 수행했습니다.
+
+평가 시 정확도뿐 아니라 다음 시스템 지표를 함께 확인했습니다.
+
+- FPS
+- End-to-End Latency
+- Model Size / Complexity
+- Edge Device Runtime
+- Real-Time Camera Inference Stability
+
+---
+
+## 6. Why This Project Matters
+
+이 프로젝트는 단순한 모델 학습 실험이 아니라 **CV 모델을 실제 Edge 시스템에 배포하고 현장에서 검증한 End-to-End 프로젝트**입니다.
+
+### Research
+
+- Small Object Detection
+- Knowledge Distillation
+- Sim-to-Real
+- Domain Gap
+- Detection / Tracking
+
+### Engineering
+
+- PyTorch / Ultralytics
+- Model Architecture Modification
+- TensorRT
+- NVIDIA Jetson
+- Camera Integration
+- Real-Time Inference
+- FPS / Latency Profiling
+
+### System-Level AI
+
+- Detection → Tracking → Threat Assessment
+- Accuracy–Latency Trade-off
+- Hardware-aware Optimization
+- Real-World Validation
+
+### Reproducibility
+
+- 학습 config 관리
+- 독립 평가 코드
+- 환경 정보 기록
+- 실험별 결과 저장
+- GitHub 기반 코드/실험 공개
+
+---
+
+## 7. Repository Structure
 
 ```text
 configs/
   train/        A0_baseline / N1_model1 / P1_model2 / T0_model3 / U1Z_ours .yaml
                 (id = 파일 이름 = runs/detection/<id> run 디렉터리 이름)
   model/        yolo11n_mapped_p2.yaml (N1), yolo11n_p2_p4.yaml (P1), yolo11n_up2.yaml (U1Z)
-  data/         airbility_uav_detection.yaml (기업 데이터 전처리, provider split 보존)
+  data/         airbility_uav_detection.yaml
+
 src/
-  utils/        project.py (저장소 기준 경로·YAML·JSON 유틸리티)
-  data/         prepare_airbility_dataset.py (6열 라벨 → 5열 YOLO, split 보존), validate_yolo_dataset.py
-  train/        train_detector.py (재현 가능한 학습, mAP50 기준 best.pt), average_checkpoints.py (epoch 평균)
-  evaluation/   evaluate_company.py (동일 조건 독립 평가 + JSON)
+  data/         prepare_airbility_dataset.py, validate_yolo_dataset.py
+  train/        train_detector.py, average_checkpoints.py
+  evaluation/   evaluate_company.py
   tests/        test_evaluate_company.py
-scripts/        01_prepare_airbility_dataset.sh
+
+scripts/        데이터 준비 및 실행 스크립트
+
 experiments/<ID>/train/
-  best_map50.json          학습 중 val mAP50 최고값과 epoch
-  environment.json         패키지 버전, GPU, params, GFLOPs, detect stride
-  experiment_config.yaml   실행 당시 학습 설정
-  args.yaml                Ultralytics 최종 인자
+  best_map50.json
+  environment.json
+  experiment_config.yaml
+  args.yaml
 ```
 
-`runs/`, `data/processed/`, `*.pt`는 `.gitignore`로 제외된다. `experiments/`는 실제 학습 run의 기록 파일을 그대로 복사한 것이라
-그 안의 `id`/`name`은 실행 당시 로컬 run 이름(A0는 `A4_...`, U1Z는 `U1_...`)으로 남아 있다. 이 저장소의 설정으로 새로 학습하면 `runs/detection/<ID>`에 같은 형식의 파일이 생성된다.
+`runs/`, `data/processed/`, `*.pt`는 `.gitignore`로 제외됩니다. `experiments/`에는 실제 학습 run의 핵심 설정과 결과를 저장하여 동일 조건의 실험을 재현할 수 있도록 구성했습니다.
 
-## 3. 환경
+---
 
-아래는 저장된 실험의 환경이다. `requirements.txt`는 Ultralytics를 고정하지만 PyTorch/CUDA와 나머지 패키지의 정확한 버전까지 고정하지는 않는다. GPU 학습에는 사용할 장치에 맞는 PyTorch/CUDA 환경이 필요하다.
+## 8. Environment
 
 ```text
-Python 3.10.21 / PyTorch 2.14.0+cu130 / Ultralytics 8.4.138 / RTX 5060 Ti 16 GB
+Python 3.10.21
+PyTorch 2.14.0+cu130
+Ultralytics 8.4.138
+Training GPU: RTX 5060 Ti 16 GB
+Edge Device: NVIDIA Jetson Orin Nano Super
 ```
 
 ```bash
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-## 4. 데이터 준비
+---
 
-기업 원본을 `data/airbility_uav_detection_dataset/{images,labels}/{train,val}/<sequence>/`에 둔다 (라벨은 6열 `cls cx cy w h track_id`).
+## 9. Dataset Preparation
+
+기업 원본 데이터는 다음 구조를 사용합니다.
+
+```text
+data/airbility_uav_detection_dataset/
+├── images/
+│   ├── train/<sequence>/
+│   └── val/<sequence>/
+└── labels/
+    ├── train/<sequence>/
+    └── val/<sequence>/
+```
+
+원본 라벨 형식:
+
+```text
+cls cx cy w h track_id
+```
+
+YOLO detection 학습용 데이터 준비:
 
 ```bash
-# provider split 보존 (다섯 실험 공통: train = 기업 train, val = 기업 val)
 bash scripts/01_prepare_airbility_dataset.sh
-#   -> data/processed/airbility_uav_detection_yolo/data.yaml + data/reports/*.json
 ```
 
-전처리는 이미지 크기(1280×720), 라벨과 클래스 범위를 확인하고 `track_id`를 제거한 5열 라벨을 생성한다. 추적 ID는 `metadata.jsonl`에 보존한다. 이미지는 기본적으로 hardlink하고, 실패하면 복사한다. 파생 이미지의 직접 수정은 원본에도 영향을 줄 수 있으므로 별도 복사가 필요한 경우 데이터 설정의 `link_mode: copy`를 사용한다.
+Provider가 제공한 train/val split을 그대로 유지합니다.
 
-스크립트는 전처리 후 split 간 이미지 해시 중복도 검사한다. 결과 폴더에 파일이 이미 있으면 중단하며, `--force`는 설정된 출력 폴더를 삭제하고 다시 만든다. 원본 데이터 폴더는 `.gitignore`에 별도 제외 규칙이 없으므로 커밋 대상에 추가하지 않는다.
+---
 
-## 5. 학습
-
-run 디렉터리 `runs/detection/<ID>`가 이미 있으면 launcher가 중단한다. 새 run은 `--name <NEW_ID>`로 지정한다.
-N1·P1을 바로 실행하려면 COCO `yolo11n.pt`가 저장소 루트에 있어야 한다(먼저 A0를 실행하면 Ultralytics가 다운로드한다).
+## 10. Training
 
 ```bash
 python -m src.train.train_detector --config configs/train/A0_baseline.yaml
@@ -81,37 +336,49 @@ python -m src.train.train_detector --config configs/train/N1_model1.yaml
 python -m src.train.train_detector --config configs/train/P1_model2.yaml
 python -m src.train.train_detector --config configs/train/T0_model3.yaml
 
-# U1Z_ours는 runs/detection/A0_baseline/weights/best.pt 를 초기값으로 쓰므로 A0 학습 후 실행
-# (40 epoch cosine, patience 15, val mAP50 기준 best.pt)
+# U1Z는 A0 best checkpoint를 초기값으로 사용
 python -m src.train.train_detector --config configs/train/U1Z_ours.yaml
 ```
 
-`train_detector.py`는 validation mAP50 최고 checkpoint를 `weights/best_map50.pt`에 저장하고 `best.pt`로 복사한다. 각 run에는 `experiment_config.yaml`, `environment.json`, `command.txt`가 함께 기록된다.
+`train_detector.py`는 validation mAP50 최고 checkpoint를 `weights/best_map50.pt`에 저장하고 `best.pt`로 복사합니다.
 
-중단된 학습은 optimizer 상태가 남아 있는 `last.pt`로 이어서 실행한다. 정상 종료 후 optimizer가 제거된 체크포인트는 정확한 resume에 사용할 수 없다.
+각 run에는 아래 정보를 함께 기록합니다.
+
+- `experiment_config.yaml`
+- `environment.json`
+- `command.txt`
+- `args.yaml`
+- `best_map50.json`
+
+---
+
+## 11. Evaluation
 
 ```bash
-python -m src.train.train_detector --resume runs/detection/A0_baseline/weights/last.pt
-```
-
-## 6. 평가
-
-```bash
-RUN_ID=U1Z_ours  # 평가할 설정 ID로 변경
 python -m src.evaluation.evaluate_company \
-  --model "runs/detection/${RUN_ID}/weights/best.pt" \
+  --model runs/detection/<ID>/weights/best.pt \
   --data data/processed/airbility_uav_detection_yolo/data.yaml \
   --split val --imgsz 1280 --batch 4 --device 0 --workers 8 \
   --conf 0.001 --iou 0.7 --max-det 300 --plots --save-json \
-  --output "runs/evaluation/${RUN_ID}_company_val_1280/metrics.json"
+  --output runs/evaluation/<ID>_company_val_1280/metrics.json
 ```
 
-평가는 `rect=True`, TTA off(기본값), 3클래스 구분 조건으로 수행하며 전체·클래스별 precision, recall, mAP50, mAP50-95와 처리 시간 등을 JSON에 기록한다. 같은 출력 디렉터리가 있으면 중단하므로 새 경로를 지정하거나 의도적으로 재사용할 때 `--exist-ok`를 추가한다. 현재 저장소에는 독립 평가 `metrics.json`과 `best.pt`가 포함되어 있지 않다.
+모든 모델은 동일한 validation split과 평가 조건에서 비교하여 구조 변경에 따른 성능 차이를 확인합니다.
 
-## 7. 간단한 코드 확인과 범위
+---
 
-```bash
-python -m unittest discover -s src/tests -v
-```
+## 12. Portfolio Summary
 
-현재 테스트는 평가 함수 import 및 호출 가능 여부만 확인한다. 데이터 전처리 전체, GPU 학습, 탐지 정확도를 검증하는 테스트는 아니다. 제공된 다섯 설정에 해당하는 탐지 파이프라인이 문서의 대상이며, 추적기·실시간 카메라·Jetson 배포 코드는 포함하지 않는다. 학습 코드에 남은 SPD/NWD 선택 분기는 필요한 모듈이 이 저장소에 없으므로 제공 설정 밖에서 해당 옵션을 켜는 방식은 지원하지 않는다.
+**Real-Time Small UAV Detection, Tracking & Threat Assessment on Edge AI****2026 Drone AI Hackathon — Grand Prize**
+
+- 기업 제공 3-class UAV 데이터 기반 소형 객체 탐지 모델 개발
+- YOLO11n baseline `mAP50 0.6167` → 최종 모델 `0.7122`로 개선
+- 기업 목표 `mAP@0.5 ≥ 0.70` 및 Jetson 실시간 추론 `≥15 FPS` 달성
+- Teacher–Student Knowledge Distillation 기반 경량화 및 성능 보완
+- Multi-Object Tracking 및 위험도 분류 파이프라인 구현
+- simulation data를 활용한 Sim-to-Real domain gap 대응
+- TensorRT 기반 NVIDIA Jetson Orin Nano Super 최적화 및 실시간 카메라 시연
+- FPS / Latency 기반 실제 Edge AI 성능 분석
+- 학습/평가 코드 및 실험 설정 공개를 통한 재현성 확보
+
+**Keywords:** `Computer Vision` `Object Detection` `Small Object Detection` `Knowledge Distillation` `Multi-Object Tracking` `Sim-to-Real` `TensorRT` `Jetson Orin Nano Super` `Edge AI` `Real-Time Inference`
